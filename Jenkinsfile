@@ -92,6 +92,13 @@ pipeline {
                     node_modules/.bin/netlify deploy --dir=build
                 ''' 
             }
+            post {
+                always {
+                    timeout(time: 1, unit: 'MINUTES') {
+                        input message: 'Deploy to Prod?', ok: 'Yes, proceed'
+                    }
+                }
+            }
         }
 
         stage('Deploy prod') {
